@@ -37,7 +37,7 @@ public class OrderItemAddServlet extends HttpServlet {
             req.getSession().setAttribute("ois", ois);
         }
 
-        /*boolean found = false;
+        boolean found = false;
         for (OrderItem orderItem : ois) {
             //session中去除的product的id和页面获取的product的id一样
             if (orderItem.getProduct().getId() == oi.getProduct().getId()) {
@@ -50,7 +50,7 @@ public class OrderItemAddServlet extends HttpServlet {
         //如果没有找到
         if (!found) {
             ois.add(oi);
-        }*/
+        }
         ois.add(oi);
 
         resp.sendRedirect("/listOrderItem");

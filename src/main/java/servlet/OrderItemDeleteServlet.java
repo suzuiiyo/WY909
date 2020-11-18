@@ -20,14 +20,15 @@ public class OrderItemDeleteServlet extends HttpServlet {
 
         List<OrderItem> ois = (List<OrderItem>) req.getSession().getAttribute("ois");
         List<OrderItem> ois4Delete = new ArrayList<>();
-        if(null != ois){
+        /*if(null != ois){
             for(OrderItem oi : ois){
                 if(oi.getProduct().getId() == pid){
                     ois4Delete.add(oi);
                 }
             }
             ois.removeAll(ois4Delete);
-        }
+        }*/
+        ois.removeIf(oi -> oi.getProduct().getId() == pid);
         resp.sendRedirect("/listOrderItem");
     }
 }
