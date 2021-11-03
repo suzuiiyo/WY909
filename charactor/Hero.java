@@ -5,6 +5,8 @@ import exceptions.EnemyHeroIsDeadException;
 import java.io.Serializable;
 
 public class Hero implements Serializable{
+    //increase id property
+    public int id;
     public String name;
     public float hp;
     public float damage;
