@@ -1,7 +1,5 @@
 package multipleThread;
 
-
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 
 public class TestThreadPools {

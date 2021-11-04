@@ -2,7 +2,10 @@ package multipleThread;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class testAutomicINteger {
+/**
+ * @author youpub
+ */
+public class testAutomicInteger {
     public static void main(String[] args) {
         AtomicInteger atomicI = new AtomicInteger();
         int i = atomicI.decrementAndGet();

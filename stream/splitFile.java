@@ -29,7 +29,4 @@ public class splitFile {
             e.printStackTrace();
         }
     }
-
-    public static class TestStream8 {
-    }
 }

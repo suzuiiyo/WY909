@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class testTHreadTry {
+public class testThreadTry {
     public static String now(){
         return new SimpleDateFormat("HH:mm:ss").format(new Date());
     }
