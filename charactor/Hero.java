@@ -10,6 +10,8 @@ public class Hero implements Serializable{
     public String name;
     public float hp;
     public float damage;
+    private String favour;
+
     public Hero(){
 
     }
@@ -17,6 +19,13 @@ public class Hero implements Serializable{
     public Hero(String nameVar, float hpVar){
         this.name = nameVar;
         this.hp = hpVar;
+    }
+
+    static String copyright;
+
+    static{
+        System.out.println("initial copyright");
+        copyright = "copyright belongs to RIOT GAMES";
     }
 
     public Hero(String nameVar) {
