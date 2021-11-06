@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="input1"></label><input type="text" onfocus="f()" onblur="b()" id="input1" placeHolder="input1">
+    <br>
+    <br>
+<label for="input2"></label><input type="text" id="input2" placeHolder="input2">
+<br>
+<br>
+<div id="message"></div>
+<br>
+
+<input type="button" onmousedown="down()" onmouseup="up()" value="use for showing pushdown and bakup">
+<br>
+<br>
+<input type="button" onmousemove="move()" value="use for showing mouse over">
+<br>
+<br>
+<input type="button" onmouseover="over()" value="use for showing mouse get into">
+<br>
+<br>
+<input type="button" onmouseout="out()" value="use for mouse out">
+<br>
+<br>
+<div id="message1"></div>
+
+<input type="button" onkeydown="keyDown(event)" value="use for showing pushdown keydown">
+<br>
+<br>
+<input type="button" onkeypress="keyPress(event)" value="use for showing pushup keypress">
+<br>
+<br>
+<input type="button" onkeyup="keyUp()" value="use for showing keyup">
+<br>
+<br>
+<div id="message2"></div>
+
+<input type="button" onclick="onceClick()" value="use for showing click once">
+<br>
+<br>
+
+<input type="button" ondblclick="twiceClick()" value="use for showing click double">
+<br>
+<br>
+<div id="message3"></div>
+
+<label for="input3"></label><input type="text" id="input3" onblur="makeChange()" placeHolder="input3">
+<br>
+<br>
+<input type="button" value="make input3 blur">
+<br>
+<br>
+<div id="message4"></div>
+
+<body onload="loadBody()">
+    <div id="message5"></div>
+    <div id="message6"></div>
+</body>
+<img onload="loadImg()" src="/home/youpub/IdeaProjects/demo1/src/main/java/DOM/katarina.jpg" alt="katarina"/>
+<br>
+<br>
+
+<label>
+    <input type="button" onclick="singleClick(this)" value="button1 for showing use this">
+</label>
+<label>
+    <input type="button" onclick="singleClick(this)" value="button2 for showing use this">
+</label>
+<br>
+<br>
+<div id="message7"></div>
+
+<script>
+  function f(){
+    document.getElementById("message").innerHTML="input1 get focus()";
+  }
+
+  function b(){
+    document.getElementById("message").innerHTML="input2 get blur()";
+  }
+
+  let number = 0;
+  function down(){
+      document.getElementById("message1").innerHTML="on push mouse";
+  }
+
+  function up(){
+      document.getElementById("message1").innerHTML="back up mouse";
+  }
+
+  function move(){
+      document.getElementById("message1").innerHTML="mouse get across times:" +(++number);
+  }
+
+  function over(){
+      document.getElementById("message1").innerHTML="mouse get into times:" +(++number);
+  }
+
+  function out(){
+      document.getElementById("message1").innerHTML="mouse out";
+      number = 0;
+  }
+
+  function keyDown(e){
+      let text = "push down the key " + e.keyCode;
+      if(e.shiftKey===1){
+          text += " and push down shift key";
+      }
+      document.getElementById("message2").innerHTML=text;
+  }
+
+  function keyUp(){
+      document.getElementById("message2").innerHTML="up the key";
+  }
+
+  function keyPress(e){
+      let text = "push down the key " + e.keyCode;
+      if(e.shiftKey===1){
+          text += " and push down shift key";
+      }
+      document.getElementById("message2").innerHTML=text;
+  }
+
+  function onceClick(){
+      document.getElementById("message3").innerHTML="click the key once";
+  }
+
+  function twiceClick(){
+      document.getElementById("message3").innerHTML="click the key twice";
+  }
+
+  function makeChange(){
+      const message = document.getElementById("message4");
+      const input = document.getElementById("input3")
+      message.innerHTML="input3's value becomes:" + input.value();
+  }
+
+  function login(){
+      alert("submit form");
+  }
+
+  function loadBody(){
+      document.getElementById("message5").innerHTML = "document load success";
+  }
+
+  function loadImg(){
+      document.getElementById("message6").innerHTML = "picture load success";
+  }
+
+  function singleClick(button){
+      const s = "the text on the button clicked is " + button.value;
+      document.getElementById("message7").innerHTML = s;
+  }
+</script>
+</body>
+</html>
