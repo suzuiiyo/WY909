@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="parent">
+        <div id="d1">first</div>
+        <div id="d2">second</div>
+        <div id="d3">third</div>
+    </div>
+<script>
+    function byChildNodes(){
+        var totalChild = document.getElementById("parent").childNodes.length;
+        alert("the total node num is " + totalChild);
+    }
+
+    function byChildren(){
+        var totalChild = document.getElementById("parent").children.length;
+        alert("the total node num is " + totalChild);
+    }
+</script>
+
+<button onclick="byChildNodes()">get total num by childNodes</button>
+<button onclick="byChildren()">get total num by children</button>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      table{
+          border-bottom-style: ridge;
+          border-collapse: collapse;
+          border-bottom-color: brown;
+      }
+      tr.odd{
+          background-color: brown;
+      }
+      tr{
+          border-bottom-style: solid;
+          border-bottom-width: 1px;
+          border-bottom-color: lightcyan;
+          height: 36px;
+      }
+      td {
+          width: 15%;
+          text-align: center;
+      }
+      a{
+          text-decoration: none;
+          color: skyblue;
+      }
+    </style>
+</head>
+<body>
+    <div id="d">
+        <table id="table">
+            <tbody id="tbody"></tbody>
+            <tr>
+                <td><a href=# onclick="sortById()">id</a><td>
+                <td><a href=# onclick="sortByName()">name</a><td>
+                <td><a href=# onclick="sortByHp()">hp</a><td>
+                <td><a href=# onclick="sortByDamage()">damage</a><tr>
+            </tr>
+        </table>
+    </div>
+    <!--
+    <script>
+        function createTB(rows){
+            var table = document.createElement("table");
+            for(var i=0; i<rows.length; i++) {
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+            }
+            return tb;
+        }
+    <script>
+    -->
+    <script>
+        var row0 = ["1", "green", "340", "58"];
+        var row1 = ["2", "teem", "320", "76"];
+        var row2 = ["3", "annie", "380", "38"];
+        var row3 = ["4", "deadbolt", "400", "90"];
+        var rows = [row0, row1, row2, row3];
+
+        var div = document.getElementById("d");
+        var flag = false;
+
+        function createTD(text){
+            var td = document.createElement("td");
+            var text = document.createTextNode(text);
+            td.appendChild(text);
+            return td;
+        }
+
+        function createTR(texts){
+            var tr = document.createElement("tr");
+            for(var i=0; i<texts.length; i++){
+                var td = createTD(texts[i]);
+                tr.appendChild(td);
+            }
+            return tr;
+        }
+
+        function sortById(){
+            flag=!flag;
+            var tbody = document.getElementById("tbody");
+            var tr;
+            for(var i=0; i<rows.length; i++){
+                if(!flag)
+                    tr = createTR(rows[i]);
+                else
+                    tr = createTR(rows[rows.length-1-i]);
+                    tbody.appendChild(tr);
+            }
+        }
+    </script>
+</body>
+</html>

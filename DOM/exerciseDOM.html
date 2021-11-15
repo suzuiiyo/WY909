@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            border-bottom-color: #09569d;
+            border-bottom-style: dotted;
+            border-collapse: collapse;
+        }
+        tr.odd{
+            background-color: chartreuse;
+        }
+        tr{
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: brown;
+            height: 40px;
+        }
+        td{
+            width: 35%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="d1">
+
+</div>
+    <script>
+        function createTD(text){
+            var td = document.createElement("td");
+            var tx = document.createTextNode(text);
+            td.appendChild(tx);
+
+            return td;
+        }
+
+        function createTR(texts){
+            var tr = document.createElement("tr");
+            for(var i=0; i<texts.length; i++){
+                var td = createTD(texts[i]);
+                tr.appendChild(td);
+            }
+
+            return tr;
+        }
+
+        function createTB(rows){
+            var table = document.createElement("table");
+            table.id = "tb1";
+            for(var i=0; i<rows.length; i++){
+                var tr = createTR(rows[i]);
+                table.appendChild(tr);
+            }
+
+            return table;
+        }
+
+        function deleteRow(link){
+            var b = confirm("are you sure to delete?")
+            if(!b)
+                return
+
+            var table = document.getElementById("tb1");
+            var td = link.parentNode;
+            var tr = td.parentNode;
+            var index = tr.rowIndex;
+            table.deleteRow(index);
+        }
+
+        var del1 = document.getElementById("a1");
+        var del2 = document.getElementById("a2");
+
+        var row0 = [ "heroName", "Operation"];
+        var row1 = [ "teemo", del1];
+        var row2 = [ "kaer", del2];
+        var rows = [row0, row1, row2];
+
+        var table = createTB(rows);
+        var d1 = document.getElementById("d1");
+        d1.append(table);
+    </script>
+
+<a id="a1" href=# onclick="deleteRow(this)"></a>
+<a id="a2" href=# onclick="deleteRow(this)"></a>
+
+</body>
+</html>

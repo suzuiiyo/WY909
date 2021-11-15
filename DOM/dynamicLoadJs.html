@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        function loadJS(){
+            var  parent = document.getElementById("parent");
+
+            var newScript = document.createElement("script");
+            newScript.src = "/home/youpub/IdeaProjects/demo1/src/main/java/DOM/test3041.js";
+            var firstScript = document.getElementsByTagName("script")[0];
+            firstScript.parentNode.insertBefore(newScript, firstScript);
+        }
+
+        function loadJS2(){
+            var s = document.createElement("script");
+            document.body.appendChild(s);
+
+            var src = document.createAttribute("src");
+            src.nodeValue = "/home/youpub/IdeaProjects/demo1/src/main/java/DOM/test3041.js";
+            s.setAttributeNode(src);
+        }
+    </script>
+
+<button onclick="loadJS()">test3041.js</button>
+<button onclick="loadJS2()">test3041_2.js</button>
+</body>
+</html>

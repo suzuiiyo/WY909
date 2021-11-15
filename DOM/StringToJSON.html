@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        var s1 = "{\"name\":\"gaga\"";
+        var s2 = ",\"hp\":616}";
+        var s3 = s1 + s2;
+
+        document.write("this is a JSON string:" + s3);
+        document.write("<br>");
+        var gareen = eval("("+s3+")");
+
+        var gareen = {"name":"gaigai", "hp":616};
+
+        document.write("hero name: " + gareen.name + "<br>");
+        document.write("hero hp: " + gareen.hp + "<br>");
+        document.write("this is a JSON object: " + gareen);
+
+        var heros=[
+            {"name": "gaigai", "hp": 616},
+            {"name": "teemo", "hp": 313},
+            {"name": "sige", "hp": 432},
+            {"name": "fireGirl", "hp": 389}
+        ]
+
+        document.write("JSON array length:" + heros.length + "<br>");
+        document.write("the fourth hero is: " + heros[3].name);
+
+        document.write("this is a json object:" + gareen);
+        document.write("<br>");
+        var heroString = JSON.stringify(gareen);
+        document.write("this is a json string: " + heroString);
+    </script>
+</body>
+</html>

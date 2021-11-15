@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="parent">parentDiv
+        <div id="d1">first</div>
+        <div id="d2">second</div>
+        <div id="d3">third</div>
+    </div>
+
+<script>
+    function appendDiv(){
+        var d4 = document.createElement("div");
+        var text = document.createTextNode("the fourth node");
+        d4.appendChild(text);
+
+        var parentDiv = document.getElementById("parent");
+        parentDiv.appendChild(d4);
+    }
+
+    function insert(){
+        var d4 = document.createElement("div");
+        var text = document.createTextNode("the insert one");
+        d4.appendChild(text);
+
+        var parentDiv = document.getElementById("parent");
+        var d2 = document.getElementById("d2");
+
+        parentDiv.insertBefore(d4, d2);
+    }
+</script>
+
+<button onclick="appendDiv()">append the fourth div</button>
+<button onclick="insert()">insert the fourth</button>
+</body>
+</html>

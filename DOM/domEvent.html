@@ -74,6 +74,90 @@
 <br>
 <div id="message7"></div>
 
+<input type="button" onclick="singleClick(this)" value="show this button1">;
+<input type="button" onclick="singleClick(this)" value="show this button2">;
+
+<br>
+<br>
+<div id="message8"></div>
+
+<form method="post" action="/home/youpub/IdeaProjects/demo1/src/main/java/DOM/login.jsp";
+      onsubmit="return login">
+    account: <label for="name"></label><input id="name" type="text" name="name"><br/>
+    password: <label for="password"></label><input id="password" type = "password" name="passwd"><br/>
+</form>
+<input type="button" onclick="onlogin()" value="login">
+
+<br>
+<style>
+    a{
+        font-size: 14px;
+        color: CornflowerBlue;
+        text-decoration: none;
+    }
+    div.menuweapon{
+        position: absolute;
+        left: 10px;
+        top: 20px;
+    }
+    div.menuarmor{
+        position: absolute;
+        left: 45px;
+        top: 20px;
+    }
+    div.menuhero{
+        position: absolute;
+        left: 80px;
+        top: 20px;
+    }
+
+    div menu{
+        width:80px;
+        border:1px solid lightgray;
+        margin-top:15px;
+        display:none;
+    }
+    div.menu a{
+        display:block;
+        font-size:14px;
+        font-family:sans-serif;
+        color:#888;
+        text-decoration:none;
+        padding:10px 0 10px 15px;
+    }
+    div.menu a:hover
+    {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<a href="#nowhere" onmouseover="showmenu('weapon')">weapon</a>
+<a href="#nowhere" onmouseover="showmenu('armor')">armor</a>
+<a href="#nowhere" onmouseover="showmenu('hero')">hero</a>
+
+<div class="menu menuhero">
+    <a href="#nowhere">gaga</a>
+    <a href="#nowhere">timoo</a>
+    <a href="#nowhere">annie</a>
+    <a href="#nowhere">siege</a>
+</div>
+
+<div class="menu menuweapon">
+    <a href="#nowhere">bigblade</a>
+    <a href="#nowhere">slayDragon</a>
+    <a href="#nowhere">relySky</a>
+    <a href="#nowhere">kongqueling</a>
+</div>
+
+<div class="menu menuarmor">
+    <a href="#nowhere">xiongjia</a>
+    <a href="#nowhere">huwan</a>
+    <a href="#nowhere">toukui</a>
+    <a href="#nowhere">xuezi</a>
+</div>
+
+<div style="height: 200px"></div>
+
 <script>
   function f(){
     document.getElementById("message").innerHTML="input1 get focus()";
@@ -152,9 +236,28 @@
   }
 
   function singleClick(button){
-      const s = "the text on the button clicked is " + button.value;
-      document.getElementById("message7").innerHTML = s;
+      document.getElementById("message7").innerHTML = "the text on the button clicked is " + button.value;
   }
-</script>
-</body>
-</html>
+
+  function onlogin(){
+      const name = document.getElementById("name");
+      if(name.value.length===0){
+          alert("userName cannot be empty");
+          return false;
+        }
+        return  true;
+     }
+
+  function showmenu(type){
+      const menuDivs = document.getElementsByClassName("menu");
+      for(i=0; i<menuDivs.length; i++){
+          const d = menuDivs[i];
+          d.style.display="none";
+      }
+      const divClassName = "menu" + type;
+
+      const div = document.getElementsByClassName(divClassName)[0];
+
+      div.style.display="block";
+  }
+    <img src="gareen.png" height="120" width="120"/></script>
