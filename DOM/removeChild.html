@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function removeDiv(){
+        var parentDiv = document.getElementById("parentDiv");
+        var div2 = document.getElementById("div2");
+        parentDiv.removeChild(div2);
+    }
+
+    function removeHref(){
+        var div2 = document.getElementById("link");
+        div2.removeAttribute("href");
+    }
+
+    function removeText(){
+        var parentDiv = document.getElementById("parentDiv");
+        parentDiv.innerHTML="";
+    }
+
+    function removeContent(){
+        var parentDiv = document.getElementById("parentDiv");
+        var txt = document.getElementById("tx");
+        parentDiv.removeChild(txt);
+    }
+
+    function recoverContent(){
+        var parentDiv = document.getElementById("parentDiv");
+        var txt = document.createTextNode("jinrikishas");
+        parentDiv.appendChild(txt);
+    }
+</script>
+
+<div id="parentDiv">
+    <div id="div1">safety div</div>
+    <div id="div2">ready to delete div</div>
+
+    <a id="link" href="https://12306.com">https://12306.com</a>
+    <text id="tx">jinrikishas</text>
+</div>
+
+</body>
+<button onclick="removeDiv()">delete second div</button>
+<button onclick="removeHref()">delete href</button>
+<button onclick="removeText()">delete txt</button>
+<button onclick="removeContent()">delete content</button>
+<button onclick="recoverContent()">recover content</button>
+</html>

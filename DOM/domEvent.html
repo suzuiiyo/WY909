@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="input1"></label><input type="text" onfocus="f()" onblur="b()" id="input1" placeHolder="input1">
+    <br>
+    <br>
+<label for="input2"></label><input type="text" id="input2" placeHolder="input2">
+<br>
+<br>
+<div id="message"></div>
+<br>
+
+<input type="button" onmousedown="down()" onmouseup="up()" value="use for showing pushdown and bakup">
+<br>
+<br>
+<input type="button" onmousemove="move()" value="use for showing mouse over">
+<br>
+<br>
+<input type="button" onmouseover="over()" value="use for showing mouse get into">
+<br>
+<br>
+<input type="button" onmouseout="out()" value="use for mouse out">
+<br>
+<br>
+<div id="message1"></div>
+
+<input type="button" onkeydown="keyDown(event)" value="use for showing pushdown keydown">
+<br>
+<br>
+<input type="button" onkeypress="keyPress(event)" value="use for showing pushup keypress">
+<br>
+<br>
+<input type="button" onkeyup="keyUp()" value="use for showing keyup">
+<br>
+<br>
+<div id="message2"></div>
+
+<input type="button" onclick="onceClick()" value="use for showing click once">
+<br>
+<br>
+
+<input type="button" ondblclick="twiceClick()" value="use for showing click double">
+<br>
+<br>
+<div id="message3"></div>
+
+<label for="input3"></label><input type="text" id="input3" onblur="makeChange()" placeHolder="input3">
+<br>
+<br>
+<input type="button" value="make input3 blur">
+<br>
+<br>
+<div id="message4"></div>
+
+<body onload="loadBody()">
+    <div id="message5"></div>
+    <div id="message6"></div>
+</body>
+<img onload="loadImg()" src="/home/youpub/IdeaProjects/demo1/src/main/java/DOM/katarina.jpg" alt="katarina"/>
+<br>
+<br>
+
+<label>
+    <input type="button" onclick="singleClick(this)" value="button1 for showing use this">
+</label>
+<label>
+    <input type="button" onclick="singleClick(this)" value="button2 for showing use this">
+</label>
+<br>
+<br>
+<div id="message7"></div>
+
+<input type="button" onclick="singleClick(this)" value="show this button1">;
+<input type="button" onclick="singleClick(this)" value="show this button2">;
+
+<br>
+<br>
+<div id="message8"></div>
+
+<form method="post" action="/home/youpub/IdeaProjects/demo1/src/main/java/DOM/login.jsp";
+      onsubmit="return login">
+    account: <label for="name"></label><input id="name" type="text" name="name"><br/>
+    password: <label for="password"></label><input id="password" type = "password" name="passwd"><br/>
+</form>
+<input type="button" onclick="onlogin()" value="login">
+
+<br>
+<style>
+    a{
+        font-size: 14px;
+        color: CornflowerBlue;
+        text-decoration: none;
+    }
+    div.menuweapon{
+        position: absolute;
+        left: 10px;
+        top: 20px;
+    }
+    div.menuarmor{
+        position: absolute;
+        left: 45px;
+        top: 20px;
+    }
+    div.menuhero{
+        position: absolute;
+        left: 80px;
+        top: 20px;
+    }
+
+    div menu{
+        width:80px;
+        border:1px solid lightgray;
+        margin-top:15px;
+        display:none;
+    }
+    div.menu a{
+        display:block;
+        font-size:14px;
+        font-family:sans-serif;
+        color:#888;
+        text-decoration:none;
+        padding:10px 0 10px 15px;
+    }
+    div.menu a:hover
+    {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<a href="#nowhere" onmouseover="showmenu('weapon')">weapon</a>
+<a href="#nowhere" onmouseover="showmenu('armor')">armor</a>
+<a href="#nowhere" onmouseover="showmenu('hero')">hero</a>
+
+<div class="menu menuhero">
+    <a href="#nowhere">gaga</a>
+    <a href="#nowhere">timoo</a>
+    <a href="#nowhere">annie</a>
+    <a href="#nowhere">siege</a>
+</div>
+
+<div class="menu menuweapon">
+    <a href="#nowhere">bigblade</a>
+    <a href="#nowhere">slayDragon</a>
+    <a href="#nowhere">relySky</a>
+    <a href="#nowhere">kongqueling</a>
+</div>
+
+<div class="menu menuarmor">
+    <a href="#nowhere">xiongjia</a>
+    <a href="#nowhere">huwan</a>
+    <a href="#nowhere">toukui</a>
+    <a href="#nowhere">xuezi</a>
+</div>
+
+<div style="height: 200px"></div>
+
+<script>
+  function f(){
+    document.getElementById("message").innerHTML="input1 get focus()";
+  }
+
+  function b(){
+    document.getElementById("message").innerHTML="input2 get blur()";
+  }
+
+  let number = 0;
+  function down(){
+      document.getElementById("message1").innerHTML="on push mouse";
+  }
+
+  function up(){
+      document.getElementById("message1").innerHTML="back up mouse";
+  }
+
+  function move(){
+      document.getElementById("message1").innerHTML="mouse get across times:" +(++number);
+  }
+
+  function over(){
+      document.getElementById("message1").innerHTML="mouse get into times:" +(++number);
+  }
+
+  function out(){
+      document.getElementById("message1").innerHTML="mouse out";
+      number = 0;
+  }
+
+  function keyDown(e){
+      let text = "push down the key " + e.keyCode;
+      if(e.shiftKey===1){
+          text += " and push down shift key";
+      }
+      document.getElementById("message2").innerHTML=text;
+  }
+
+  function keyUp(){
+      document.getElementById("message2").innerHTML="up the key";
+  }
+
+  function keyPress(e){
+      let text = "push down the key " + e.keyCode;
+      if(e.shiftKey===1){
+          text += " and push down shift key";
+      }
+      document.getElementById("message2").innerHTML=text;
+  }
+
+  function onceClick(){
+      document.getElementById("message3").innerHTML="click the key once";
+  }
+
+  function twiceClick(){
+      document.getElementById("message3").innerHTML="click the key twice";
+  }
+
+  function makeChange(){
+      const message = document.getElementById("message4");
+      const input = document.getElementById("input3")
+      message.innerHTML="input3's value becomes:" + input.value();
+  }
+
+  function login(){
+      alert("submit form");
+  }
+
+  function loadBody(){
+      document.getElementById("message5").innerHTML = "document load success";
+  }
+
+  function loadImg(){
+      document.getElementById("message6").innerHTML = "picture load success";
+  }
+
+  function singleClick(button){
+      document.getElementById("message7").innerHTML = "the text on the button clicked is " + button.value;
+  }
+
+  function onlogin(){
+      const name = document.getElementById("name");
+      if(name.value.length===0){
+          alert("userName cannot be empty");
+          return false;
+        }
+        return  true;
+     }
+
+  function showmenu(type){
+      const menuDivs = document.getElementsByClassName("menu");
+      for(i=0; i<menuDivs.length; i++){
+          const d = menuDivs[i];
+          d.style.display="none";
+      }
+      const divClassName = "menu" + type;
+
+      const div = document.getElementsByClassName(divClassName)[0];
+
+      div.style.display="block";
+  }
+    <img src="gareen.png" height="120" width="120"/></script>

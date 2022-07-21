@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="parentDiv">父Div的内容
+        <div id="d1">first</div><div id="d2">second</div>
+        <div id="d3">third</div>
+    </div>
+
+    <script>
+        function getPreBrother(){
+            const d2 = document.getElementById("d2");
+            var pre = d2.previousSibling.nodeName;
+            if(pre){
+                alert("the pre div's name is " + pre);
+            }
+            else
+            {
+                alert("there were no pre div");
+            }
+        }
+
+        function getNextBrother() {
+            const nextName = document.getElementById("d2").nextSibling.nodeName;
+            if (nextName) {
+                alert("the next div's name is " + nextName);
+            } else {
+                alert("there were no next div");
+            }
+        }
+    </script>
+
+<button onclick="getPreBrother()">get d2's pre brother</button>
+<button onclick="getNextBrother()">get d2's next brother</button>
+</body>
+</html>

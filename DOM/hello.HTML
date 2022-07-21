@@ -1,0 +1,48 @@
+<html>
+    <body>
+        <div id="d1">hello HTML DOM</div>
+    </body>
+
+    <h1 class="d">hello javascript</h1>
+    <h2 class="d">hello BOM</h2>
+    <div class="d">hello DOM</div>
+    <br>
+
+    用户名 <input name="userName"> <br>
+    密码  <input name="userPassword">
+    <br>
+<script>
+    function p(s){
+        document.write(s);
+        document.write("<br>");
+    }
+
+    var div1 = document.getElementById("d1");
+    p("文档节点"+document);
+    p("元素"+div1);
+    p("属性节点"+div1.attributes[0]);
+    p("内容节点"+div1.childNodes[0]);
+
+    document.write(div1);
+
+    var divs = document.getElementsByTagName("div");
+
+    for(i=0; i<divs.length; i++){
+        document.write(divs[i]);
+        document.write("<br>");
+    }
+
+    var elements = document.getElementsByClassName("d");
+
+    for(i=0; i<elements.length; i++){
+        document.write(elements[i]);
+        document.write("<br>");
+    }
+
+    var elements = document.getElementsByName("userName");
+    for(i=0; i<elements.length; i++) {
+        document.write(elements[i]);
+        document.write("<br>");
+    }
+</script>
+</html>

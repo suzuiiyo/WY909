@@ -1,0 +1,11 @@
+<html>
+<div id="d1" align="center" class="abc">hello HTML DOM</div>
+
+<script>
+    var div1 = document.getElementById("d1");
+    var content = div1.childNodes[0];
+    document.write("div 's content set name is:" + content.nodeName);
+    document.write("<br>")
+    document.write("div 's content set value is:" + content.nodeValue);
+</script>
+</html>

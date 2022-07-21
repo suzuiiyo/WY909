@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="d">Hello HTML DOM</div>
+    <script>
+        function add(){
+            var hr = document.createElement("hr");
+            var div1 = document.getElementById("d");
+            div1.appendChild(hr);
+        }
+        function addAn(){
+            var p = document.createElement("p");
+            var text = document.createTextNode("this created by DOM<p>");
+            p.appendChild(text);
+
+            var div1 = document.getElementById("d");
+            div1.appendChild(p);
+        }
+        function addSe(){
+            var a = document.createElement("a");
+            var content = document.createTextNode("http://12306.com");
+            a.appendChild(content);
+
+            var href = document.createAttribute("href");
+            href.nodeValue="http://12306.com";
+            a.setAttributeNode(href);
+
+            var div1 = document.getElementById("d");
+            div1.appendChild(a);
+        }
+    </script>
+<button onclick="add()">add a hr to div</button>
+<button onclick="addAn()">add a text to div</button>
+<button onclick="addSe()">add a attribute to div</button>
+
+</body>
+</html>
