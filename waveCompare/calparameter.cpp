@@ -9,6 +9,8 @@ CalParameter::CalParameter(QString path1, QString path2):
     ,chanelPara(new ChanelParaDAO())
     ,strPath1(path1)
     ,strPath2(path2)
+    ,wavePoints1(0)
+    ,wavePoints2(0)
 {
 }
 
@@ -202,18 +204,21 @@ QStringList CalParameter::getChanelNameList1()
    return chanelNameList1;
 }
 
-QMap<QDateTime, int> CalParameter::getChopFactor1()
+int CalParameter::getWavePoint1()
 {
-   chopFactor1 = openComtrade->getWavePoints();
-   return chopFactor1;
+    wavePoints1 = openComtrade->getWavePoints();
+    return wavePoints1;
+}
+
+QString CalParameter::getSurgeTime1()
+{
+    tmSurge1 = openComtrade->getSurgeTime();
+    return tmSurge1;
 }
 
 int CalParameter::getStartPos1()
 {
-   int startPos1 = 0;
-   if(!chopFactor1.isEmpty()){
-        startPos1 = openComtrade->getStartPos(chopFactor1.begin().value());
-   }
+   int startPos1 = openComtrade->getStartPos(wavePoints1);
    return startPos1;
 }
 
@@ -231,18 +236,21 @@ QStringList CalParameter::getChanelNameList2()
    return chanelNameList2;
 }
 
-QMap<QDateTime, int> CalParameter::getChopFactor2()
+int CalParameter::getWavePoint2()
 {
-   chopFactor2 = openComtrade2->getWavePoints();
-   return chopFactor2;
+   wavePoints2 = openComtrade2->getWavePoints();
+   return wavePoints2;
+}
+
+QString CalParameter::getSurgeTime2()
+{
+   tmSurge2 = openComtrade2->getSurgeTime();
+   return tmSurge2;
 }
 
 int CalParameter::getStartPos2()
 {
-   int startPos2 = 0;
-   if(!chopFactor2.isEmpty()){
-        startPos2 = openComtrade2->getStartPos(chopFactor2.begin().value());
-   }
+   int startPos2 = openComtrade2->getStartPos(wavePoints2);
    return startPos2;
 }
 

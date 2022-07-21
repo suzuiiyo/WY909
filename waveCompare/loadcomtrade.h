@@ -31,8 +31,10 @@ public:
     QStringList getSwitchName();
     //是否成功读取comtrade文件
     bool Func_LoadCmtdFile(CCmtdFile*, const QString&);
-    //获取采样点数和突变点时刻
-    QMap<QDateTime, int> getWavePoints();
+    //获取采样点数
+    int getWavePoints();
+    //获得突变点时刻
+    QString getSurgeTime();
     //获取模拟量通道总数和开关量通道总数
     QMap<int, int> getChTotal();
     //获得起始点序号

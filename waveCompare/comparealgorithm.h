@@ -26,7 +26,9 @@ public:
     QList<float> calVectorPeak(QVector<float>);
     
     //插入0值使得比对序列采样点数一致
+    //采样序列1
     QVector<float> calSample1Value(QVector<float>, int);
+    //采样序列2
     QVector<float> calSample2Value(QVector<float>, int);
     
     //获取突变前周波采样序列
@@ -52,9 +54,9 @@ public:
     //获得比对结论
     float getCompareConclusion();
     
-    void setSurgetTime(QDateTime, QDateTime);
-    void setWavePoint(int, int);
-    void setStartPoint(int, int);
+    void setSurgeTime(const QString&, const QString&);
+    void setWavePoint(const int&, const int&);
+    void setStartPoint(const int&, const int&);
     
     QVector<float> getRelativeError();
 
@@ -70,8 +72,8 @@ private:
     int multipleRate;
     
     //突变点时刻
-    QDateTime t_surgeTime1;
-    QDateTime t_surgeTime2;
+    QString t_surgeTime1;
+    QString t_surgeTime2;
     
     //每周波采样点
     int t_wavePoints1;
@@ -98,6 +100,9 @@ private:
     QVector<float> effectBefore1zhou2;
     //参与比对序列突变后采样序列
     QVector<float> effectAfter1zhou2;
+    //总序列
+    QVector<float> effectTotal1zhou2;
+
     
     //比对点序列
     QList<int> t_pointSeqList1;

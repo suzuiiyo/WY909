@@ -166,8 +166,10 @@ private:
 
 
     //突变点时刻
-    QDateTime surgeTime1;
-    QDateTime surgeTime2;
+    QString surgeTime1;
+    QString surgeTime2;
+    QDateTime surgeDateTime1;
+    QDateTime surgeDateTime2;
 
     //最左点时刻
     QDateTime leftTime1;

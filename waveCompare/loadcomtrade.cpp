@@ -108,8 +108,6 @@ bool LoadComtrade::init(const QString &strPath)
 
         //突变点
         nTbPos = ((ssStart - ssLeft)*1000 + (mesStart - mesLeft)/1000)/((double)20/wavePoints);
-
-        
 //        }else{
 //            for(int i=0; i<sampleTimeVector.size(); i++){
 //                //如果最左采样时刻小于0
@@ -160,6 +158,11 @@ bool LoadComtrade::Func_LoadCmtdFile(CCmtdFile *pFile, const QString &strPath){
     return true;
 }
 
+QString LoadComtrade::getSurgeTime()
+{
+    return strStartTime;
+}
+
 //同一个周波的突变前两周波和突变后六个周波
 QMap<QVector<float>, QVector<float>> LoadComtrade::getSampleValue(int chseq)
 {
@@ -172,22 +175,22 @@ QMap<QVector<float>, QVector<float>> LoadComtrade::getSampleValue(int chseq)
     aChanelat1 = p_cmtdFile->m_arAChanel.at(chseq)->m_pData;
     if(!jibaoFile){
         //1 circle before surge
-        for(int i=nTbPos - wavePoints; i<=nTbPos; i++){
+        for(int i=nTbPos - 2*wavePoints; i<=nTbPos; i++){
             chopBefore1zhou.append(aChanelat1.at(i));
         }
 
         //6 circle after surge
-        for(int i=nTbPos; i<nTbPos + 6*wavePoints; i++){
+        for(int i=nTbPos; i<nTbPos + 5*wavePoints; i++){
             chopAfter1zhou.append(aChanelat1.at(i));
         }
     }else{
         //1 circle before surge
-        for(int i=nTbPos - wavePoints; i<=nTbPos; i++){
+        for(int i=nTbPos - 2*wavePoints; i<=nTbPos; i++){
             chopBefore1zhou.append(-1*aChanelat1.at(i));
         }
 
         //6 circle after surge
-        for(int i=nTbPos; i<nTbPos + 6*wavePoints; i++){
+        for(int i=nTbPos; i<nTbPos + 5*wavePoints; i++){
             chopAfter1zhou.append(-1*aChanelat1.at(i));
         }
     }
@@ -286,29 +289,10 @@ QStringList LoadComtrade::getSwitchName()
     return switchChnameList;
 }
 
-QMap<QDateTime, int> LoadComtrade::getWavePoints()
+int LoadComtrade::getWavePoints()
 {
-    QDateTime tmStart;
-    int wavePoints = 0;
-    QMap<QDateTime, int> chopFactor;
-
-    wavePoints = p_cmtdFile->m_pSegment->m_nWavePoints;
-
-    QString day = strStartTime.section('/', 0, 0);
-    QString month = strStartTime.section('/', 1, 1);
-    QString year = strStartTime.section(',', 0, 0).section('/', 2, 2);
-
-    QString hour = strStartTime.section(',', 1, 1).section(':', 0, 0);
-    QString minute = strStartTime.section(',', 1, 1).section(':', 1, 1);
-    QString second = strStartTime.section(',', 1, 1).section(':', 2, 2).section(".", 0, 0);
-
-    QString mecSec = strStartTime.section('.', 1, 1);
-
-    tmStart = QDateTime::fromString(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "." + mecSec.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
-
-    chopFactor.insert(tmStart, wavePoints);
-
-    return chopFactor;
+    int wavePoints = p_cmtdFile->m_pSegment->m_nWavePoints;
+    return wavePoints;
 }
 
 QMap<int, int> LoadComtrade::getChTotal()
@@ -327,26 +311,12 @@ QMap<int, int> LoadComtrade::getChTotal()
 
 int LoadComtrade::getStartPos(const int& wavePoints)
 {
-    int nTbPos = 0;
     int startPosition = 0;
-
-    QVector<double> sampleTimeVector = p_cmtdFile->m_pSampleTime;
-    float timeDiff = p_cmtdFile->m_dTimeSpan;
-    for(int i=0; i<sampleTimeVector.size(); i++){
-        //如果最左采样时刻小于0
-        if(sampleTimeVector.at(0) < 0){
-            if(sampleTimeVector.at(i) >= 0){
-                nTbPos = i;
-                break;
-            }
-            //找到采样时刻大于等于timeDiff的点
-        }else if(sampleTimeVector.at(0) >= 0 && sampleTimeVector.at(i) >= timeDiff){
-                nTbPos = i;
-                break;
-        }
+    if(nTbPos - wavePoints > 0){
+        startPosition = nTbPos - wavePoints - 1;
+    }else{
+        startPosition = 0;
     }
-
-    startPosition = nTbPos - wavePoints - 1;
 
     return startPosition;
 }
@@ -354,11 +324,48 @@ int LoadComtrade::getStartPos(const int& wavePoints)
 double LoadComtrade::getTotalTime()
 {
    double valuePoint =0.0;
+   bool bIsSame = true;
    QVector<double> sampleTimeVector = p_cmtdFile->m_pSampleTime;
-   for(int i=sampleTimeVector.size() -1; i>0; i--){
-       if(sampleTimeVector.at(i)!=0){
-          valuePoint = sampleTimeVector.at(i);
-          break;
+   //逐个元素和第一个比，如果有不同证明读取时间序列正常
+   foreach(double time, sampleTimeVector){
+       if(time != sampleTimeVector.first()){
+           bIsSame = false;
+           break;
+       }
+   }
+
+   QVector<double> reSampleTimeVector;
+   if(bIsSame){
+        float timeper = p_cmtdFile->m_dTimeSpan/nTbPos;
+        for(int i=0; i<p_cmtdFile->m_pSampleTime.size(); i++){
+            if(i<nTbPos){
+                reSampleTimeVector.append((i-nTbPos)*timeper);
+            }else if(i == nTbPos){
+                reSampleTimeVector.append(0);
+            }else if(i>nTbPos){
+                reSampleTimeVector.append((i-nTbPos)*timeper);
+            }
+        }
+   }
+
+   if(!bIsSame){
+       for(int i=sampleTimeVector.size() -1; i>0; i--){
+          if(0 == sampleTimeVector.at(0) && sampleTimeVector.at(i)!=0){
+            valuePoint = sampleTimeVector.at(i);
+            break;
+          }else if(sampleTimeVector.at(0) < 0 && sampleTimeVector.at(i)!=0){
+              valuePoint = sampleTimeVector.at(i) - sampleTimeVector.at(0);
+              break;
+          }
+       }
+   }else if(bIsSame){
+       for(int i=reSampleTimeVector.size() -1; i>0; i--){
+          if(0 == reSampleTimeVector.at(0) && reSampleTimeVector.at(i)!=0){
+            valuePoint = reSampleTimeVector.at(i);
+            break;
+          }else if(reSampleTimeVector.at(0) < 0 && reSampleTimeVector.at(i)!=0){
+              valuePoint = reSampleTimeVector.at(i) - reSampleTimeVector.at(0);
+          }
        }
    }
    return valuePoint;
@@ -370,13 +377,10 @@ QDateTime LoadComtrade::getLeftTime()
     QString month = strLeftTime.section('/', 1, 1);
     QString year = strLeftTime.section(',', 0, 0).section('/', 2, 2);
 
-    QString hour = strLeftTime.section(',', 1, 1).section(':', 0, 0);
-    QString minute = strLeftTime.section(',', 1, 1).section(':', 1, 1);
-    QString second = strLeftTime.section(',', 1, 1).section(':', 2, 2).section(".", 0, 0);
-
+    QString time = strLeftTime.section("/", 1, 2).section("/", 1, 1).section(",", 1, 2).section(".", 0, 0);
     QString mecSec = strLeftTime.section('.', 1, 1);
 
-    QDateTime leftTime = QDateTime::fromString(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "." + mecSec.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
+    QDateTime leftTime = QDateTime::fromString(year + "-" + month + "-" + day + " " + time + "." + mecSec.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
     return leftTime;
 }
 

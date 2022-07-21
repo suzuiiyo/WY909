@@ -22,6 +22,9 @@ CompareAlgorithm::CompareAlgorithm(const QList<QVector<float> >  &sampleList, co
 
     effectBefore1zhou2 = effectiveList.at(2);
     effectAfter1zhou2 = effectiveList.at(3);
+
+    effectTotal1zhou2 = effectBefore1zhou2;
+    effectTotal1zhou2.append(effectAfter1zhou2);
 }
 
 CompareAlgorithm::~CompareAlgorithm()
@@ -63,29 +66,14 @@ QVector<float> CompareAlgorithm::calSample1Value(QVector<float> varSample1, int 
 {
     QVector<float> sample1;
 
-    if(varAlign!=0){
-        if(transFlag == false){
-            for(int i= 0; i< varSample1.size(); i++)
-            {
-                sample1.append(varSample1[i]);
-                for(int i = 0; i<multipleRate/t_wavePoints1-1; i++){
-                    sample1.append(0.0);
-                }
-            }
-        }else
-        {
-            for(int i= abs(varAlign)/(multipleRate/t_wavePoints1); i< varSample1.size(); i++)
-            {
-                sample1.append(varSample1[i]);
-                for(int i=0; i<multipleRate/t_wavePoints1-1; i++){
-                    sample1.append(0);
-                }
-            }
+    for(int i= 0; i< varSample1.size(); i++)
+    {
+        if(varSample1.at(i) <0.01){
+            varSample1.replace(i, 0.0);
         }
-    }else{
-        for(int i=0; i<varSample1.size(); i++)
-        {
-            sample1.append(varSample1[i]);
+        sample1.append(varSample1[i]);
+        for(int i = 0; i<multipleRate/t_wavePoints1-1; i++){
+            sample1.append(0.0);
         }
     }
     return sample1;
@@ -94,33 +82,59 @@ QVector<float> CompareAlgorithm::calSample1Value(QVector<float> varSample1, int 
 QVector<float> CompareAlgorithm::calSample2Value(QVector<float> varSample2, int varAlign)
 {
     QVector<float> sample2;
-
-    if(varAlign!=0){
+    if(varSample2 == effectBefore1zhou2){
         if(transFlag){
             for(int i= abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size(); i++)
             {
-                sample2.append(varSample2[i]);
+                if(effectTotal1zhou2[i] < 0.01){
+                    effectTotal1zhou2.replace(i, 0.0);
+                }
+                sample2.append(effectTotal1zhou2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
                     sample2.append(0.0);
                 }
             }
         }else {
-            for(int i= 0; i< varSample2.size(); i++)
+            for(int i= 0; i< varSample2.size() - abs(varAlign)/(multipleRate/t_wavePoints2); i++)
             {
+                if(varSample2[i] < 0.01){
+                    varSample2.replace(i, 0.0);
+                }
                 sample2.append(varSample2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
                     sample2.append(0.0);
                 }
             }
         }
-    }else
-    {
-        for(int i= 0; i< varSample2.size(); i++)
-        {
-            sample2.append(varSample2[i]);
-        }
+        return sample2;
     }
-    return sample2;
+
+    if(varSample2 == effectAfter1zhou2){
+        if(transFlag){
+            for(int i = abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size(); i++)
+            {
+                if(varSample2[i] <0.01){
+                    varSample2.replace(i, 0.0);
+                }
+                sample2.append(varSample2[i]);
+                for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
+                    sample2.append(0);
+                }
+            }
+        }else{
+            for(int i = abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size() + abs(varAlign)/(multipleRate/t_wavePoints2); i++)
+            {
+                if(effectTotal1zhou2[i] < 0.01){
+                    effectTotal1zhou2.replace(i, 0.0);
+                }
+                sample2.append(effectTotal1zhou2[i]);
+                for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
+                    sample2.append(0);
+                }
+            }
+        }
+        return sample2;
+    }
 }
 
 QMap<QVector<float>, QVector<float> > CompareAlgorithm::getChopBeforeZhou() const
@@ -154,14 +168,18 @@ QMap<QVector<float>, QVector<float> > CompareAlgorithm::getInsertCompareVector()
 
 int CompareAlgorithm::calAlignPosition()
 {
-    uint stime = t_surgeTime1.toMSecsSinceEpoch();
-    uint etime = t_surgeTime2.toMSecsSinceEpoch();
+    int ssStart1 = t_surgeTime1.section(',', 1, 1).section(':', 2, 2).section('.', 0, 0).toInt();
+    int mesStart1 = t_surgeTime1.section(',', 1, 1).section(':', 2, 2).section('.', 1, 1).toInt();
+
+    int ssStart2 = t_surgeTime2.section(',', 1, 1).section(':', 2, 2).section('.', 0, 0).toInt();
+    int mesStart2 = t_surgeTime2.section(',', 1, 1).section(':', 2, 2).section('.', 1, 1).toInt();
+
     int varAlign = 0;
     multipleRate = calMultipleRate(t_wavePoints1, t_wavePoints2);
+    int ssRet = ssStart1 - ssStart2;
+    int mesRet = mesStart1 - mesStart2;
 
-    int tRet = stime - etime;
-
-    if(tRet){
+    if(ssRet || mesRet){
         //被对齐序列
         QList<float> beforePeakList = this->calVectorPeak(sampleBefore1zhou);
         QList<float> before2PeakList = this->calVectorPeak(sampleBefore1zhou2);
@@ -226,7 +244,7 @@ int CompareAlgorithm::calAlignPosition()
     }
 
     //如果突变点时刻一致
-    else if(!tRet){
+    else if(!ssRet && !mesRet){
         varAlign = 0;
         return varAlign;
     }
@@ -237,6 +255,7 @@ void CompareAlgorithm::calBeforeCompareData(int alignBeforeDelta)
 {
     QVector<float> effectBefore1 = calSample1Value(effectBefore1zhou, alignBeforeDelta);
     QVector<float> effectBefore2 = calSample2Value(effectBefore1zhou2, alignBeforeDelta);
+
     insertCompareBefore1 = effectBefore1zhou;
 
     int compareValue = multipleRate/t_wavePoints1;
@@ -300,18 +319,19 @@ void CompareAlgorithm::calBeforeCompareData(int alignBeforeDelta)
         totalComparePoints = effectBefore1.size();
     }
 
+    int lastIndex =0;
+    for(int k=effectBefore2.size()-1; k>0; k--){
+        if(effectBefore2.at(k) !=0){
+            lastIndex = k;
+        }
+        break;
+    }
+
     for(int i=0; i<totalComparePoints / compareValue; i++){
         t_pointSeqList1.append(t_startPos1 + i);
         if(i == 0){
             float comparision = effectBefore1.at(0) - effectBefore2.at(0);
-            float comparisionRel;
-            if(effectBefore1.at(0) == 0 && effectBefore2.at(0) == 0){
-                comparisionRel = 0.0;
-            }else if(comparision > 0.01 && effectBefore2.at(0) == 0){
-                comparisionRel = 1.0;
-            }else{
-                comparisionRel = (effectBefore1.at(0) - effectBefore2.at(0))/effectBefore2.at(0);
-            }
+            float comparisionRel = (effectBefore1.at(0) - effectBefore2.at(0))/effectBefore2.at(0);
 
             beforeCompareData.append(comparision);
             t_pointSeqList2.append(t_startPos2 + i);
@@ -329,8 +349,10 @@ void CompareAlgorithm::calBeforeCompareData(int alignBeforeDelta)
         }
         else
         {
-            float comparision;
-            float comparisionRel;
+            float comparision1;
+            float comparision2;
+            float comparisionRel1;
+            float comparisionRel2;
 
             for(int j=0; j<valueFactor; j++){
                 if(effectBefore2.at(compareValue*i - j) !=0
@@ -338,45 +360,49 @@ void CompareAlgorithm::calBeforeCompareData(int alignBeforeDelta)
                    effectBefore2.size() > (compareValue*i + j)
                     &&
                    effectBefore2.at(compareValue*i + j)!=0){
-                   float average = (effectBefore2.at(compareValue*i - j) + effectBefore2.at(compareValue*i + j))/2;
-                   comparision = effectBefore1.at(compareValue*i) - average;
-                   if(effectBefore1.at(compareValue*i) == 0 && average == 0){
-                    comparisionRel = 0.0;
-                   }else if(comparision > 0.01 && average == 0)
-                   {
-                       comparisionRel = 1.0;
-                   }else{
-                       comparisionRel = (effectBefore1.at(compareValue*i) - average)/average;
-                   }
+                       comparision1 = effectBefore1.at(compareValue*i) - effectBefore2.at(compareValue*i - j);
+                       comparision2 = effectBefore1.at(compareValue*i) - effectBefore2.at(compareValue*i + j);
+                       comparisionRel1 = comparision1/effectBefore2.at(compareValue*i - j);
+                       comparisionRel2 = comparision2/effectBefore2.at(compareValue*i + j);
                 }else if(effectBefore2.at(compareValue*i - j)!=0
                          &&
                          effectBefore2.size() < (compareValue*i + j)
                          ){
-                   float average = (effectBefore2.at(compareValue*i - j) + effectBefore2.last())/2;
-                   comparision = effectBefore1.at(compareValue*i) - average;
-                   if(effectBefore1.at(compareValue*i) == 0 && average == 0){
-                       comparisionRel = 0.0;
-                   }else if(comparision > 0.01 && average == 0)
-                   {
-                       comparisionRel = 1.0;
-                   }else{
-                       comparisionRel = (effectBefore1.at(compareValue*i) - average)/average;
-                   }
+                       comparision1 = effectBefore1.at(compareValue*i) - effectBefore2.at(compareValue*i - j);
+                       comparision2 = effectBefore2.at(compareValue*i) - effectBefore2.at(lastIndex);
+                       comparisionRel1 = comparision1/effectBefore2.at(compareValue*i - j);
+                       comparisionRel2 = comparision2/effectBefore2.at(lastIndex);
                 }
             }
 
-            beforeCompareData.append(comparision);
-            t_pointSeqList2.append(t_startPos2 + valueFactor*i + 1);
-            insertCompareBefore2.append(effectBefore1.at(compareValue*i) - comparision);
-            relativeError.append(comparisionRel);
+            if(abs(comparision1) > abs(comparision2)){
+                beforeCompareData.append(comparision2);
+                t_pointSeqList2.append(t_startPos2 + valueFactor*i + 1);
+                insertCompareBefore2.append(effectBefore1.at(compareValue*i) - comparision2);
+                relativeError.append(comparisionRel2);
 
-            if(comparisionRel < 0.050)
-            {
-               pointConclusion.append(normal);
-            }else if(comparisionRel >=0.050 && comparisionRel < 0.100){
-               pointConclusion.append(innormal);
-            }else if(comparisionRel >= 0.100){
-               pointConclusion.append(critical);
+                if(comparisionRel2 < 0.050)
+                {
+                    pointConclusion.append(normal);
+                }else if(comparisionRel2 >=0.050 && comparisionRel2 < 0.100){
+                    pointConclusion.append(innormal);
+                }else if(comparisionRel2 >= 0.100){
+                    pointConclusion.append(critical);
+                }
+            }else{
+                beforeCompareData.append(comparision1);
+                t_pointSeqList2.append(t_startPos2 + valueFactor*i + 1);
+                insertCompareBefore2.append(effectBefore1.at(compareValue*i) - comparision1);
+                relativeError.append(comparisionRel1);
+
+                if(comparisionRel1 < 0.050)
+                {
+                    pointConclusion.append(normal);
+                }else if(comparisionRel1 >=0.050 && comparisionRel1 < 0.100){
+                    pointConclusion.append(innormal);
+                }else if(comparisionRel1 >= 0.100){
+                    pointConclusion.append(critical);
+                }
             }
 
             for(int i=0; i<insertCompareBefore2.size(); i++){
@@ -477,25 +503,21 @@ void CompareAlgorithm::calAfterCompareData(int alignAfterDelta)
         afterStartPos2 = t_pointSeqList2.last() + 1;
     }
 
-                    QVector<float> floatIndo;
-                    QVector<float> averageList;
-                    QVector<float> floatResult;
-                    QVector<float> averageBefore;
-                    QVector<float> averageAfter;
+    int lastIndex=0;
+    for(int k=effectAfter2.size() -1; k>0; k--){
+        if(effectAfter2.at(k)!=0){
+            lastIndex = k;
+        }
+        break;
+    }
+
     for(int i=0; i<totalComparePoints/compareValue; i++)
     {
         t_pointSeqList1.append(afterStartPos + i);
 
         if(i == 0){
             float comparision = effectAfter1.at(0) - effectAfter2.at(0);
-            float comparisionRel;
-            if(effectAfter1.at(0) == 0 && effectAfter2.at(0) == 0){
-                comparisionRel = 0.0;
-            }else if(comparision > 0.01 && effectAfter2.at(0) == 0){
-                comparisionRel = 1.0;
-            }else{
-                comparisionRel = (effectAfter1.at(0) - effectAfter2.at(0))/effectAfter2.at(0);
-            }
+            float comparisionRel = (effectAfter1.at(0) - effectAfter2.at(0))/effectAfter1.at(0);
             afterCompareData.append(comparision);
             t_pointSeqList2.append(afterStartPos2 + i);
             insertCompareAfter2.append(effectAfter2.at(0));
@@ -512,8 +534,10 @@ void CompareAlgorithm::calAfterCompareData(int alignAfterDelta)
         }
         else
         {
-            float comparision;
-            float comparisionRel;
+            float comparision1;
+            float comparision2;
+            float comparisionRel1;
+            float comparisionRel2;
 
             for(int j =0 ; j< valueFactor; j++){
                 if(effectAfter2.at(compareValue*i - j)!=0
@@ -521,49 +545,50 @@ void CompareAlgorithm::calAfterCompareData(int alignAfterDelta)
                    effectAfter2.size() > (compareValue*i + j)
                      &&
                    effectAfter2.at(compareValue*i + j)!=0){
-                    float average = (effectAfter2.at(compareValue*i - j) + effectAfter2.at(compareValue*i + j))/2;
-                    comparision = effectAfter1.at(compareValue*i) - average;
+                       comparision1 = effectAfter1.at(compareValue*i) - effectAfter2.at(compareValue*i - j);
+                       comparisionRel1 = comparision1/effectAfter2.at(compareValue*i - j);
+                       comparision2 = effectAfter1.at(compareValue*i) - effectAfter2.at(compareValue*i + j);
+                       comparisionRel2 = comparision2/effectAfter2.at(compareValue*i + j);
 
-                    if(effectAfter1.at(compareValue*i) == 0 && average == 0){
-                        comparisionRel = 0.0;
-                    }else if(comparision > 0.01 && average == 0){
-                        comparisionRel = 1.0;
-                    }else{
-                        comparisionRel = (effectAfter1.at(compareValue*i) - average)/average;
-                        floatIndo.append(effectAfter1.at(compareValue*i));
-                        averageList.append(average);
-                        floatResult.append(comparisionRel);
-                    }
-
-                    averageBefore.append(effectAfter2.at(compareValue*i - j));
-                    averageAfter.append(effectAfter2.at(compareValue*i + j));
                 }else if(effectAfter2.at(compareValue*i - j)!=0
                          &&
                          effectAfter2.size() < (compareValue*i + j)){
-                    float average = (effectAfter2.at(compareValue*i - j) + effectAfter2.last())/2;
-                    comparision = effectAfter1.at(compareValue*i) - average;
-                    if(effectAfter1.at(compareValue*i) == 0 && average == 0){
-                        comparisionRel = 0.0;
-                    }else if(comparision > 0.01 && average == 0){
-                        comparisionRel = 1.0;
-                    }else{
-                        comparisionRel = (effectAfter1.at(compareValue*i) - average)/average;
-                    }
+                       comparision1 = effectAfter1.at(compareValue*i) - effectAfter2.at(compareValue*i - j);
+                       comparisionRel1 = comparision1/effectAfter2.at(compareValue*i - j);
+                       comparision2 = effectAfter1.at(compareValue*i) - effectAfter2.at(lastIndex);
+                       comparisionRel2 = comparision2/effectAfter2.at(lastIndex);
                 }
             }
 
-            afterCompareData.append(comparision);
-            t_pointSeqList2.append(afterStartPos2 + valueFactor*i + 1);
-            insertCompareAfter2.append(effectAfter1.at(compareValue*i) - comparision);
-            relativeError.append(comparisionRel);
+            if(abs(comparision1) > abs(comparision2)){
+                afterCompareData.append(comparision2);
+                t_pointSeqList2.append(afterStartPos2 + valueFactor*i + 1);
+                insertCompareAfter2.append(effectAfter1.at(compareValue*i) - comparision2);
+                relativeError.append(comparisionRel2);
 
-            if(comparisionRel < 0.050)
+                if(comparisionRel2 < 0.050)
+                {
+                    pointConclusion.append(normal);
+                }else if(comparisionRel2 >=0.050 && comparisionRel2 < 0.100){
+                    pointConclusion.append(innormal);
+                }else if(comparisionRel2 >= 0.100){
+                    pointConclusion.append(critical);
+                }
+            }else
             {
-                pointConclusion.append(normal);
-            }else if(comparisionRel >=0.050 && comparisionRel < 0.100){
-                pointConclusion.append(innormal);
-            }else if(comparisionRel >= 0.100){
-                pointConclusion.append(critical);
+                afterCompareData.append(comparision1);
+                t_pointSeqList2.append(afterStartPos2 + valueFactor*i + 1);
+                insertCompareAfter2.append(effectAfter1.at(compareValue*i) - comparision1);
+                relativeError.append(comparisionRel1);
+
+                if(comparisionRel1 < 0.050)
+                {
+                    pointConclusion.append(normal);
+                }else if(comparisionRel1 >=0.050 && comparisionRel1 < 0.100){
+                    pointConclusion.append(innormal);
+                }else if(comparisionRel1 >= 0.100){
+                    pointConclusion.append(critical);
+                }
             }
 
             for(int i=0; i<insertCompareAfter2.size(); i++){
@@ -573,19 +598,6 @@ void CompareAlgorithm::calAfterCompareData(int alignAfterDelta)
             }
         }
     }
-
-                    qDebug() << effectAfter1 << "a1a1a1a1a1a1a1a1a1";
-                    qDebug() << effectAfter2 << "a2a2a2a2a2a2a2a2a2";
-                    qDebug() << effectAfter1.size() << "kkakakakaka";
-                    qDebug() << effectAfter2.size() << "manamamanama";
-//                    qDebug() << floatIndo << "aaaaaaaaaaaaaa";
-//                    qDebug() << floatIndo.size() << "11111111";
-//                    qDebug() << averageAfter << "AfterAfterAfter";
-//                    qDebug() << averageBefore << "BeforeBeforeBefore";
-//                    qDebug() << averageList << "bbbbbbbbbbb";
-//                    qDebug() << averageList.size() << "2222222222";
-//                    qDebug() << floatResult << "ccccccccccc";
-//                    qDebug() << floatResult.size() << "33333333333";
 }
 
 QMap<QVector<float>, QVector<float> > CompareAlgorithm::getCompareDataMap() const
@@ -606,46 +618,41 @@ QMap<QList<int>, QList<int> > CompareAlgorithm::getPointSeqMap() const
 float CompareAlgorithm::getCompareConclusion()
 {
      //连续3个点的有效值超出5%
-//     for(int i=0; i<relativeError.size() - 2; i++){
-//         if(relativeError.at(i) > 0.05
-//                 &&
-//            relativeError.at(i + 1) > 0.05
-//                 &&
-//            relativeError.at(i + 2) > 0.05){
-//            t_compareConclusion = (relativeError.at(i) + relativeError.at(i + 1) + relativeError.at(i + 2))/3;
-//         }else if(relativeError.at(i) > 0.1
-//                 &&
-//            relativeError.at(i + 1) > 0.1
-//                 &&
-//            relativeError.at(i + 2) > 0.1){
-//            t_compareConclusion = (relativeError.at(i) + relativeError.at(i + 1) + relativeError.at(i + 2))/3;
-//         }
-//     }
-     float sum = 0;
-     for(int i=0; i<relativeError.size(); i++){
-         sum += relativeError.at(i);
+     for(int i=0; i<relativeError.size() - 2; i++){
+         if(relativeError.at(i) > 0.05 && relativeError.at(i) < 0.1
+                 &&
+            relativeError.at(i + 1) > 0.05 && relativeError.at(i) < 0.1
+                  &&
+            relativeError.at(i + 2) > 0.05 && relativeError.at(i) < 0.1){
+            t_compareConclusion = (relativeError.at(i) + relativeError.at(i + 1) + relativeError.at(i + 2))/3;
+         }else if(relativeError.at(i) >= 0.1
+                 &&
+            relativeError.at(i + 1) >= 0.1
+                 &&
+            relativeError.at(i + 2) >= 0.1){
+            t_compareConclusion = (relativeError.at(i) + relativeError.at(i + 1) + relativeError.at(i + 2))/3;
+         }
      }
-     t_compareConclusion = sum/relativeError.size();
 
      //计算比较值序列的平均值作为比对结论
 //     t_compareConclusion = fabs((sumAfter + sumBefore)/(afterCompareData.size() + beforeCompareData.size())/((sumEffectBefore1 + sumEffectAfter1)/(effectBefore1zhou.size() + effectAfter1zhou.size())));
-     qDebug() << t_compareConclusion << "wanlawanlawanlawanla";
+//     qDebug() << t_compareConclusion << "wanlawanlawanlawanla";
      return t_compareConclusion;
 }
 
-void CompareAlgorithm::setSurgetTime(QDateTime time1, QDateTime time2)
+void CompareAlgorithm::setSurgeTime(const QString& time1, const QString& time2)
 {
     t_surgeTime1 = time1;
     t_surgeTime2 = time2;
 }
 
-void CompareAlgorithm::setWavePoint(int num1, int num2)
+void CompareAlgorithm::setWavePoint(const int& num1, const int& num2)
 {
     t_wavePoints1 = num1;
     t_wavePoints2 = num2;
 }
 
-void CompareAlgorithm::setStartPoint(int num1, int num2)
+void CompareAlgorithm::setStartPoint(const int& num1, const int& num2)
 {
     t_startPos1 = num1;
     t_startPos2 = num2;

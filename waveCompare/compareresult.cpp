@@ -200,12 +200,26 @@ bool CompareResult::parse2WaveParameter(const QString &varName1, const QString &
         chNameList2 = keyPara->getChanelNameList2();
 
         //基准比对序列突变点时刻
-        surgeTime1 = keyPara->getChopFactor1().begin().key();
-        wavePoints1 = keyPara->getChopFactor1().begin().value();
+        surgeTime1 = keyPara->getSurgeTime1();
+        wavePoints1 = keyPara->getWavePoint1();
 
         //参与比对序列突变点时刻
-        surgeTime2 = keyPara->getChopFactor2().begin().key();
-        wavePoints2 = keyPara->getChopFactor2().begin().value();
+        surgeTime2 = keyPara->getSurgeTime2();
+        wavePoints2 = keyPara->getWavePoint2();
+
+        QString day = surgeTime1.section("/", 0, 0);
+        QString month = surgeTime1.section("/", 1, 1).section("/", 0, 0);
+        QString year = surgeTime1.section("/", 1, 2).section("/", 1, 1).section(",", 0, 0);
+        QString time = surgeTime1.section("/", 1, 2).section("/", 1, 1).section(",", 1, 2).section(".", 0, 0);
+        QString mecSec = surgeTime1.section(".", 1, 1);
+        surgeDateTime1 = QDateTime::fromString(year + "-" + month + "-" + day + " " + time + "." + mecSec.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
+
+        QString day2 = surgeTime2.section("/", 0, 0);
+        QString month2 = surgeTime2.section("/", 1, 1).section("/", 0, 0);
+        QString year2 = surgeTime2.section("/", 1, 2).section("/", 1, 1).section(",", 0, 0);
+        QString time2 = surgeTime2.section("/", 1, 2).section("/", 1, 1).section(",", 1, 2).section(".", 0, 0);
+        QString mecSec2 = surgeTime2.section(".", 1, 1);
+        surgeDateTime2 = QDateTime::fromString(year2 + "-" + month2 + "-" + day2 + " " + time2 + "." + mecSec2.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
 
         //最左点时刻
         leftTime1 = keyPara->getLeftTimeList().at(0);
@@ -257,7 +271,7 @@ bool CompareResult::parse2WaveParameter(const QString &varName1, const QString &
         QVector<int> alignVec;
         for(int i = 0; i<effectValueTotalList.size(); i++){
             CompareAlgorithm comAlg(sampleValueTotalList.at(i), effectValueTotalList.at(i));
-            comAlg.setSurgetTime(surgeTime1, surgeTime2);
+            comAlg.setSurgeTime(surgeTime1, surgeTime2);
             comAlg.setWavePoint(wavePoints1, wavePoints2);
             comAlg.setStartPoint(startPos1, startPos2);
 
@@ -268,7 +282,6 @@ bool CompareResult::parse2WaveParameter(const QString &varName1, const QString &
             comAlg.calAfterCompareData(alignVec.at(0));
 //            comAlg.calBeforeCompareData(alignposition);
 //            comAlg.calAfterCompareData(alignposition);
-            qDebug() << alignVec.at(0) << "alignposition";
             compareDatalistMapList.append(comAlg.getCompareDataMap());
             pointSeqlistMapList.append(comAlg.getPointSeqMap());
             insertCompareDataList.append(comAlg.getInsertCompareVector());
@@ -439,12 +452,12 @@ double CompareResult::getTotalTime()
 
 double CompareResult::getResetTime1()
 {
-    return totalTime - (surgeTime1.toMSecsSinceEpoch() - leftTime1.toMSecsSinceEpoch());
+    return totalTime - (surgeDateTime1.toMSecsSinceEpoch() - leftTime1.toMSecsSinceEpoch());
 }
 
 double CompareResult::getResetTime2()
 {
-    return totalTime - (surgeTime2.toMSecsSinceEpoch() - leftTime2.toMSecsSinceEpoch());
+    return totalTime - (surgeDateTime2.toMSecsSinceEpoch() - leftTime2.toMSecsSinceEpoch());
 }
 
 QList<QVector<float>> CompareResult::getRelativeErrorVectorList() const
@@ -962,8 +975,9 @@ QList<float> CompareResult::getCompareConclusionList() const
 QList<QDateTime> CompareResult::getSurgeTimeList() const
 {
     QList<QDateTime> timeList;
-    timeList.append(surgeTime1);
-    timeList.append(surgeTime2);
+
+    timeList.append(surgeDateTime1);
+    timeList.append(surgeDateTime2);
 
     return timeList;
 }
@@ -1031,12 +1045,26 @@ bool CompareResult::parse2WaveParameterRef2(const QString &varName1, const QStri
         chNameList2 = keyPara->getChanelNameList2();
 
         //基准比对序列突变点时刻
-        surgeTime1 = keyPara->getChopFactor1().begin().key();
-        wavePoints1 = keyPara->getChopFactor1().begin().value();
+        surgeTime1 = keyPara->getSurgeTime1();
+        wavePoints1 = keyPara->getWavePoint1();
 
         //参与比对序列突变点时刻
-        surgeTime2 = keyPara->getChopFactor2().begin().key();
-        wavePoints2 = keyPara->getChopFactor2().begin().value();
+        surgeTime2 = keyPara->getSurgeTime2();
+        wavePoints2 = keyPara->getWavePoint2();
+
+        QString day = surgeTime1.section("/", 0, 0);
+        QString month = surgeTime1.section("/", 1, 1).section("/", 0, 0);
+        QString year = surgeTime1.section("/", 1, 2).section("/", 1, 1).section(",", 0, 0);
+        QString time = surgeTime1.section("/", 1, 2).section("/", 1, 1).section(",", 1, 2).section(".", 0, 0);
+        QString mecSec = surgeTime1.section(".", 1, 1);
+        surgeDateTime1 = QDateTime::fromString(year + "-" + month + "-" + day + " " + time + "." + mecSec.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
+
+        QString day2 = surgeTime2.section("/", 0, 0);
+        QString month2 = surgeTime2.section("/", 1, 1).section("/", 0, 0);
+        QString year2 = surgeTime2.section("/", 1, 2).section("/", 1, 1).section(",", 0, 0);
+        QString time2 = surgeTime2.section("/", 1, 2).section("/", 1, 1).section(",", 1, 2).section(".", 0, 0);
+        QString mecSec2 = surgeTime2.section(".", 1, 1);
+        surgeDateTime2 = QDateTime::fromString(year2 + "-" + month2 + "-" + day2 + " " + time2 + "." + mecSec2.mid(0, 3), "yyyy-MM-dd hh:mm:ss.zzz");
 
         //最左点时刻
         leftTime1 = keyPara->getLeftTimeList().at(0);
@@ -1088,7 +1116,7 @@ bool CompareResult::parse2WaveParameterRef2(const QString &varName1, const QStri
         QVector<int> alignVec;
         for(int i = 0; i<effectValueTotalList.size(); i++){
             CompareAlgorithm comAlg(sampleValueTotalList.at(i), effectValueTotalList.at(i));
-            comAlg.setSurgetTime(surgeTime1, surgeTime2);
+            comAlg.setSurgeTime(surgeTime1, surgeTime2);
             comAlg.setWavePoint(wavePoints1, wavePoints2);
             comAlg.setStartPoint(startPos1, startPos2);
 

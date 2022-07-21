@@ -288,7 +288,7 @@ bool ResultIntoDb::productResult()
                         QString unit = varStr + ", ";
                         standardSampleVectorString += unit;
                     }
-                    standardSampleVectorString + "}";
+                    standardSampleVectorString += "}";
                     wr.setStandardSamplesValue(standardSampleVectorString);
 
                     //
@@ -311,7 +311,7 @@ bool ResultIntoDb::productResult()
                         QString unit = varStr + ", ";
                         taskSampleVectorString += unit;
                     }
-                    taskSampleVectorString + "}";
+                    taskSampleVectorString += "}";
                     wr.setTaskSamplesValue(taskSampleVectorString);
 
                     //
@@ -321,7 +321,7 @@ bool ResultIntoDb::productResult()
                        QString unit = varStr + ", ";
                        taskPointSeqString.append(unit);
                     }
-                    taskPointSeqString + "}";
+                    taskPointSeqString += "}";
                     wr.setTaskSamplesPointSeq(taskPointSeqString);
 
                     //
@@ -331,7 +331,7 @@ bool ResultIntoDb::productResult()
                         QString unit = varStr + ", ";
                         relativeErrorString += unit;
                     }
-                    relativeErrorString + "}";
+                    relativeErrorString += "}";
                     wr.setPointRelativeError(relativeErrorString);
 
                     //
@@ -341,7 +341,7 @@ bool ResultIntoDb::productResult()
                         QString unit = varStr + ", ";
                         absoluteErrorString += unit;
                     }
-                    absoluteErrorString + "}";
+                    absoluteErrorString += "}";
                     wr.setPointAbsoluteError(absoluteErrorString);
 
                     //
@@ -351,7 +351,7 @@ bool ResultIntoDb::productResult()
                         QString unit = varStr + ", ";
                         pointConclusionString += unit;
                     }
-                    pointConclusionString + "}";
+                    pointConclusionString += "}";
                     wr.setPointColusion(pointConclusionString);
 
                     //
@@ -660,7 +660,7 @@ bool ResultIntoDb::productResult(int &varCount, xmlINFO &varXML)
                         QString unit = varStr + ", ";
                         standardSampleVectorString += unit;
                     }
-                    standardSampleVectorString + "}";
+                    standardSampleVectorString += "}";
                     wr.setStandardSamplesValue(standardSampleVectorString);
 
                     //
@@ -683,7 +683,7 @@ bool ResultIntoDb::productResult(int &varCount, xmlINFO &varXML)
                         QString unit = varStr + ", ";
                         taskSampleVectorString += unit;
                     }
-                    taskSampleVectorString + "}";
+                    taskSampleVectorString += "}";
                     wr.setTaskSamplesValue(taskSampleVectorString);
 
                     //
@@ -693,7 +693,7 @@ bool ResultIntoDb::productResult(int &varCount, xmlINFO &varXML)
                        QString unit = varStr + ", ";
                        taskPointSeqString.append(unit);
                     }
-                    taskPointSeqString + "}";
+                    taskPointSeqString += "}";
                     wr.setTaskSamplesPointSeq(taskPointSeqString);
 
                     //
@@ -713,7 +713,7 @@ bool ResultIntoDb::productResult(int &varCount, xmlINFO &varXML)
                         QString unit = varStr + ", ";
                         absoluteErrorString += unit;
                     }
-                    absoluteErrorString + "}";
+                    absoluteErrorString += "}";
                     wr.setPointAbsoluteError(absoluteErrorString);
 
                     //
@@ -723,7 +723,7 @@ bool ResultIntoDb::productResult(int &varCount, xmlINFO &varXML)
                         QString unit = varStr + ", ";
                         pointConclusionString += unit;
                     }
-                    pointConclusionString + "}";
+                    pointConclusionString += "}";
                     wr.setPointColusion(pointConclusionString);
 
                     //

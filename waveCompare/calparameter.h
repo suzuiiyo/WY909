@@ -41,14 +41,16 @@ public:
     QMap<QVector<float>, QVector<float>> getSampleValueMap1(const int);
     //获得通道名称
     QStringList getChanelNameList1();
-    //获得周波系数，包括采样点个数和突变时刻
-    QMap<QDateTime, int> getChopFactor1();
+    //获得周波系数，采样点个数和突变时刻
+    int getWavePoint1();
+    QString getSurgeTime1();
     //获得本周波第一个采样点的序号
     int getStartPos1();
 
     QMap<QVector<float>, QVector<float>> getSampleValueMap2(const int);
     QStringList getChanelNameList2();
-    QMap<QDateTime, int> getChopFactor2();
+    int getWavePoint2();
+    QString getSurgeTime2();
     int getStartPos2();
 
     //获得dataRef2开关量通道的值
@@ -90,8 +92,11 @@ private:
     QString strPath1;
     QString strPath2;
     
-    QMap<QDateTime, int> chopFactor1;
-    QMap<QDateTime, int> chopFactor2;
+    int wavePoints1;
+    int wavePoints2;
+
+    QString tmSurge1;
+    QString tmSurge2;
 };
 
 #endif // CALPARAMETER_H
