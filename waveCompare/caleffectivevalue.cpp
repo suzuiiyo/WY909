@@ -29,7 +29,7 @@ QVector<float> CalEffectiveValue::calEffValueBefore(QVector<float> varList, int 
     std::reverse(varList.begin(), varList.end());
     //计算前两个周波的有效值就要取三个周波的采样值
     float* p_data = new float[3*pointNum];
-    for(int i=5*pointNum; i<varList.size(); i++){
+    for(int i=6*pointNum; i<varList.size(); i++){
        uCalVector.append(varList.at(i));
     }
 
@@ -39,7 +39,7 @@ QVector<float> CalEffectiveValue::calEffValueBefore(QVector<float> varList, int 
     }
 
     //每一个点的采样值,往后推一个周波
-    for(int i=0; i<2*pointNum + 1; i++){
+    for(int i=0; i<2*pointNum; i++){
        float fp = 0.0;
        float rms = wyCal->DFT_Rms(p_data+i, pointNum, fp);
 
@@ -69,7 +69,7 @@ QVector<float> CalEffectiveValue::calEffValueAfter(QVector<float> varList, int p
     }
 
     //每一个点的有效值,往后推一个周波
-    for(int i=0; i<6*pointNum + 1; i++){
+    for(int i=0; i<6*pointNum; i++){
         float fp =0.0;
         float rms = wyCal->DFT_Rms(p_data+i, pointNum, fp);
 
