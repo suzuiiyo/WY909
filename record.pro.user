@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.6.2, 2022-07-22T10:12:44. -->
+<!-- Written by QtCreator 4.6.2, 2022-07-22T10:18:30. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -186,7 +186,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/youpub/record/waveCompare/waveCompare.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">/home/youpub/桌面/开普检测30日/WY9DZK_RCD_728_20220630_101912_041_F  /home/youpub/桌面/开普检测30日/PL22011_RCD_9931_20220629_101818_043_f   WY9DZK  PL22011</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">/home/youpub/桌面/录波文件/开普检测30日/WY9DZK_RCD_728_20220630_101912_041_F  /home/youpub/桌面/录波文件/开普检测30日/PL22011_RCD_9931_20220629_101818_043_f   WY9DZK  PL22011</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">waveCompare/waveCompare.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
