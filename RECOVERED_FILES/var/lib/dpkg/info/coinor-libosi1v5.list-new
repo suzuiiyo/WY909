@@ -1,0 +1,18 @@
+Package: libcodemodel-java
+Status: deinstall ok half-configured
+Priority: optional
+Section: java
+Installed-Size: 251
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: jaxb (2.3.0.1-8)
+Version: 2.6+jaxb2.3.0.1-8
+Config-Version: 2.6+jaxb2.3.0.1-8
+Depends: libistack-commons-java
+Description: Java library for code generators
+ CodeModel is a Java library for code generators; it provides a way to
+ generate Java programs in a way much nicer than
+ PrintStream.println(). This project is a spin-off from the JAXB
+ Reference Implementation for its schema compiler to generate Java
+ source files.
+Homepage: https://javaee.github.io/jaxb-v2/

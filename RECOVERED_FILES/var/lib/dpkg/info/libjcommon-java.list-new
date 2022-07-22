@@ -1,0 +1,18 @@
+Package: libcommons-codec-java
+Status: deinstall ok half-configured
+Priority: optional
+Section: java
+Installed-Size: 355
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Version: 1.11-1
+Config-Version: 1.11-1
+Depends: libcommons-parent-java (>= 39)
+Description: encoder and decoders such as Base64 and hexadecimal codec
+ The codec package contains simple encoder and decoders for various
+ formats such as Base64 and Hexadecimal.  In addition to these widely
+ used encoders and decoders, the codec package also maintains a
+ collection of phonetic encoding utilities.
+ .
+ This is a part of the Apache Commons Project.
+Homepage: http://commons.apache.org/codec/

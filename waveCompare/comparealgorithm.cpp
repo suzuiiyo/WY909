@@ -66,41 +66,43 @@ QVector<float> CompareAlgorithm::calSample1Value(QVector<float> varSample1, int 
 {
     QVector<float> sample1;
 
-    for(int i= 0; i< varSample1.size(); i++)
-    {
-        if(varSample1.at(i) <0.01){
-            varSample1.replace(i, 0.0);
+    if(varSample1 == effectBefore1zhou){
+        for(int i= t_wavePoints1; i< varSample1.size(); i++)
+        {
+            sample1.append(varSample1[i]);
+            for(int i = 0; i<multipleRate/t_wavePoints1-1; i++){
+                sample1.append(0.0);
+            }
         }
-        sample1.append(varSample1[i]);
-        for(int i = 0; i<multipleRate/t_wavePoints1-1; i++){
-            sample1.append(0.0);
+        return sample1;
+    }else if(varSample1 == effectAfter1zhou){
+        for(int i=0; i< varSample1.size() - t_wavePoints1; i++){
+            sample1.append(varSample1[i]);
+            for(int i=0; i<multipleRate/t_wavePoints1-1; i++){
+                sample1.append(0.0);
+            }
         }
+        return sample1;
     }
-    return sample1;
 }
 
 QVector<float> CompareAlgorithm::calSample2Value(QVector<float> varSample2, int varAlign)
 {
     QVector<float> sample2;
+    float deltaFactor = abs(varAlign)/(multipleRate/t_wavePoints2);
     if(varSample2 == effectBefore1zhou2){
         if(transFlag){
-            for(int i= abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size(); i++)
+            for(int i= t_wavePoints2 - deltaFactor; i< varSample2.size() - deltaFactor; i++)
             {
-                if(effectTotal1zhou2[i] < 0.01){
-                    effectTotal1zhou2.replace(i, 0.0);
-                }
                 sample2.append(effectTotal1zhou2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
                     sample2.append(0.0);
                 }
             }
         }else {
-            for(int i= 0; i< varSample2.size() - abs(varAlign)/(multipleRate/t_wavePoints2); i++)
+            for(int i= t_wavePoints2 + deltaFactor; i< varSample2.size() + deltaFactor; i++)
             {
-                if(varSample2[i] < 0.01){
-                    varSample2.replace(i, 0.0);
-                }
-                sample2.append(varSample2[i]);
+                sample2.append(effectTotal1zhou2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
                     sample2.append(0.0);
                 }
@@ -111,25 +113,19 @@ QVector<float> CompareAlgorithm::calSample2Value(QVector<float> varSample2, int 
 
     if(varSample2 == effectAfter1zhou2){
         if(transFlag){
-            for(int i = abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size(); i++)
+            for(int i = effectBefore1zhou2.size() - deltaFactor; i< effectTotal1zhou2.size() - t_wavePoints2 - deltaFactor; i++)
             {
-                if(varSample2[i] <0.01){
-                    varSample2.replace(i, 0.0);
-                }
-                sample2.append(varSample2[i]);
+                sample2.append(effectTotal1zhou2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
-                    sample2.append(0);
+                    sample2.append(0.0);
                 }
             }
         }else{
-            for(int i = abs(varAlign)/(multipleRate/t_wavePoints2); i< varSample2.size() + abs(varAlign)/(multipleRate/t_wavePoints2); i++)
+            for(int i = effectBefore1zhou2.size() + deltaFactor; i<effectTotal1zhou2.size() - t_wavePoints2 + deltaFactor; i++)
             {
-                if(effectTotal1zhou2[i] < 0.01){
-                    effectTotal1zhou2.replace(i, 0.0);
-                }
                 sample2.append(effectTotal1zhou2[i]);
                 for(int i = 0; i<multipleRate/t_wavePoints2-1; i++){
-                    sample2.append(0);
+                    sample2.append(0.0);
                 }
             }
         }
@@ -256,7 +252,9 @@ void CompareAlgorithm::calBeforeCompareData(int alignBeforeDelta)
     QVector<float> effectBefore1 = calSample1Value(effectBefore1zhou, alignBeforeDelta);
     QVector<float> effectBefore2 = calSample2Value(effectBefore1zhou2, alignBeforeDelta);
 
-    insertCompareBefore1 = effectBefore1zhou;
+    for(int i=t_wavePoints1; i<effectBefore1zhou.size(); i++){
+        insertCompareBefore1.append(effectBefore1zhou.at(i));
+    }
 
     int compareValue = multipleRate/t_wavePoints1;
     int compareValue2 = multipleRate/t_wavePoints2;
@@ -419,7 +417,9 @@ void CompareAlgorithm::calAfterCompareData(int alignAfterDelta)
     QVector<float> effectAfter1 = calSample1Value(effectAfter1zhou, alignAfterDelta);
     QVector<float> effectAfter2 = calSample2Value(effectAfter1zhou2, alignAfterDelta);
 
-    insertCompareAfter1 = effectAfter1zhou;
+    for(int i=0; i<effectAfter1zhou.size() - t_wavePoints1; i++){
+        insertCompareAfter1.append(effectAfter1zhou.at(i));
+    }
 
     int compareValue = multipleRate/t_wavePoints1;
     int compareValue2 = multipleRate/t_wavePoints2;

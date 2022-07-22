@@ -1,0 +1,18 @@
+Package: libplexus-sec-dispatcher-java
+Status: deinstall ok config-files
+Priority: optional
+Section: java
+Installed-Size: 53
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: plexus-sec-dispatcher
+Version: 1.4-4
+Config-Version: 1.4-4
+Depends: libplexus-cipher-java (>= 1.7), libplexus-utils2-java (>= 2.x)
+Suggests: libplexus-sec-dispatcher-java-doc
+Description: Plexus Security Dispatcher Component used by Maven
+ The Plexus project provides a full software stack for creating and
+ executing software projects. Based on the Plexus container, the applications
+ can utilise component-oriented programming to build modular, reusable
+ components that can easily be assembled and reused.
+Homepage: https://github.com/codehaus-plexus/plexus-sec-dispatcher

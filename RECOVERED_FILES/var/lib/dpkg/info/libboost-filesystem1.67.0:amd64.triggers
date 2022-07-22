@@ -1,0 +1,19 @@
+Package: libexttextcat-data
+Status: deinstall ok half-installed
+Priority: optional
+Section: text
+Installed-Size: 501
+Maintainer: Debian LibreOffice Maintainers <debian-openoffice@lists.debian.org>
+Architecture: all
+Multi-Arch: foreign
+Source: libexttextcat
+Version: 3.4.5-1
+Config-Version: 3.4.5-1
+Description: Language detection library - data files
+ Libexttextcat is a library with functions that implement the classification
+ technique described in Cavnar & Trenkle, "N-Gram-Based Text Categorization".
+ It was primarily developed for language guessing, a task on which it is known
+ to perform with near-perfect accuracy.
+ .
+ This package provides the libtextcat data files.
+Homepage: https://wiki.documentfoundation.org/Libexttextcat

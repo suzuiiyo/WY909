@@ -174,23 +174,23 @@ QMap<QVector<float>, QVector<float>> LoadComtrade::getSampleValue(int chseq)
 
     aChanelat1 = p_cmtdFile->m_arAChanel.at(chseq)->m_pData;
     if(!jibaoFile){
-        //1 circle before surge
-        for(int i=nTbPos - 2*wavePoints; i<=nTbPos; i++){
+        //3 circle before surge
+        for(int i=nTbPos - 3*wavePoints; i<=nTbPos; i++){
             chopBefore1zhou.append(aChanelat1.at(i));
         }
 
         //6 circle after surge
-        for(int i=nTbPos; i<nTbPos + 5*wavePoints; i++){
+        for(int i=nTbPos; i<nTbPos + 6*wavePoints; i++){
             chopAfter1zhou.append(aChanelat1.at(i));
         }
     }else{
         //1 circle before surge
-        for(int i=nTbPos - 2*wavePoints; i<=nTbPos; i++){
+        for(int i=nTbPos - 3*wavePoints; i<=nTbPos; i++){
             chopBefore1zhou.append(-1*aChanelat1.at(i));
         }
 
         //6 circle after surge
-        for(int i=nTbPos; i<nTbPos + 5*wavePoints; i++){
+        for(int i=nTbPos; i<nTbPos + 6*wavePoints; i++){
             chopAfter1zhou.append(-1*aChanelat1.at(i));
         }
     }

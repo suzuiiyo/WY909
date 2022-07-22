@@ -1,0 +1,16 @@
+Package: ca-certificates-java
+Status: deinstall ok installed
+Priority: optional
+Section: java
+Installed-Size: 43
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Multi-Arch: foreign
+Version: 20190405
+Depends: ca-certificates (>= 20121114), default-jre-headless | java8-runtime-headless, libnss3 (>= 3.12.10-2~)
+Conffiles:
+ /etc/ca-certificates/update.d/jks-keystore 762f85ea84e5498a5d2ed147358fdc34
+ /etc/default/cacerts 0ded97abeff69c2362939e2e881e214a
+Description: Common CA certificates (JKS keystore)
+ This package uses the hooks of the ca-certificates package to update the
+ cacerts JKS keystore used for many java runtimes.

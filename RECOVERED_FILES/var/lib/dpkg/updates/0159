@@ -1,0 +1,14 @@
+Package: libxz-java
+Status: purge ok config-files
+Priority: optional
+Section: java
+Installed-Size: 170
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: xz-java
+Version: 1.8-2
+Description: Java library with a complete implementation of XZ data compression
+ XZ for Java aims to be a complete implementation of XZ data compression
+ in pure Java. Single-threaded streamed compression and decompression
+ and random access decompression have been fully implemented.
+Homepage: http://tukaani.org/xz/java.html

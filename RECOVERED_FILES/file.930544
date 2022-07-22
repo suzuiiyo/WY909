@@ -1,0 +1,5 @@
+Package: libasm-java
+Status: unknown ok not-installed
+Priority: optional
+Section: java
+Architecture: all

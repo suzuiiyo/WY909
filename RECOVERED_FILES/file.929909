@@ -1,0 +1,18 @@
+Package: libactivation-java
+Status: deinstall ok installed
+Priority: optional
+Section: java
+Installed-Size: 147
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: javabeans-activation-framework
+Version: 1.2.0-2
+Replaces: glassfish-activation
+Breaks: glassfish-activation
+Description: JavaBeans Activation Framework
+ The JavaBeans Activation Framework (JAF) is a standard extension to the Java
+ platform that lets you take advantage of standard services to: determine the
+ type of an arbitrary piece of data; encapsulate access to it; discover the
+ operations available on it; and instantiate the appropriate bean to perform
+ the operation(s).
+Homepage: https://github.com/javaee/activation

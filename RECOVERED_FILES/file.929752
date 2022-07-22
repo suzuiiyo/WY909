@@ -1,0 +1,6 @@
+Package: librevenge-0.0-0
+Status: unknown ok not-installed
+Priority: optional
+Section: libs
+Architecture: amd64
+Multi-Arch: same
