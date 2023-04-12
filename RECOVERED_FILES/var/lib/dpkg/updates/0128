@@ -1,0 +1,33 @@
+Package: libplexus-utils2-java
+Status: deinstall ok half-installed
+Priority: optional
+Section: java
+Installed-Size: 289
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: plexus-utils2
+Version: 3.1.1-1
+Config-Version: 3.1.1-1
+Replaces: libplexus-utils-java
+Provides: libplexus-utils-java (= 1:1.5.15-5)
+Suggests: libplexus-utils2-java-doc
+Breaks: libplexus-utils-java
+Description: utilities for the Plexus framework
+ The Plexus project provides a full software stack for creating and executing
+ software projects. Based on the Plexus container, the applications can
+ utilise component-oriented programming to build modular, reusable components
+ that can easily be assembled and reused.
+ .
+ While Plexus is similar to other inversion-of-control (IoC) or dependency
+ injection frameworks such as the Spring Framework, it is a full-fledged
+ container that supports many more features such as:
+ .
+  * Component lifecycles
+  * Component instantiation strategies
+  * Nested containers
+  * Component configuration
+  * Auto-wiring
+  * Component dependencies, and
+  * Various dependency injection techniques including constructor injection,
+   setter injection, and private field injection.
+Homepage: http://codehaus-plexus.github.io/plexus-utils/

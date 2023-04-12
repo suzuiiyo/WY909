@@ -1,0 +1,17 @@
+Package: libjaxen-java
+Status: deinstall ok half-configured
+Priority: optional
+Section: java
+Installed-Size: 263
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Version: 1.1.6-4
+Config-Version: 1.1.6-4
+Replaces: libsaxpath-java
+Suggests: libdom4j-java, libjdom1-java (>= 1.1.3), libxom-java
+Conflicts: libsaxpath-java
+Description: Java XPath engine
+ jaxen is a universal object model walker, capable of evaluating XPath
+ expressions across multiple models. Currently supported are dom4j,
+ JDOM, DOM and XOM.
+Homepage: https://github.com/codehaus/jaxen

@@ -1,0 +1,17 @@
+Package: libcglib-java
+Status: deinstall ok half-installed
+Priority: optional
+Section: java
+Installed-Size: 344
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: cglib
+Version: 3.2.10-1
+Config-Version: 3.2.10-1
+Depends: libasm-java (>= 6.0)
+Suggests: ant
+Description: Code generation library for Java
+ cglib is a powerful, high performance and quality code generation
+ library. It is used to extend Java classes and implement interfaces at
+ run-time.
+Homepage: http://cglib.sourceforge.net

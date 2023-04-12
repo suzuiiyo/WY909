@@ -1,0 +1,45 @@
+Package: openjdk-11-jre-headless
+Status: deinstall ok installed
+Priority: optional
+Section: java
+Installed-Size: 166681
+Maintainer: OpenJDK Team <openjdk-11@packages.debian.org>
+Architecture: amd64
+Multi-Arch: same
+Source: openjdk-11
+Version: 11.0.15+10-1~deb10u1
+Replaces: openjdk-11-jdk-headless (<< 11~18-2)
+Provides: java-runtime-headless, java10-runtime-headless, java11-runtime-headless, java2-runtime-headless, java5-runtime-headless, java6-runtime-headless, java7-runtime-headless, java8-runtime-headless, java9-runtime-headless
+Depends: ca-certificates-java (>= 20190405~), java-common (>= 0.28), libcups2, liblcms2-2 (>= 2.2+git20110628), libjpeg62-turbo (>= 1.3.1), libfontconfig1, libnss3 (>= 2:3.17.1), util-linux (>= 2.26.2-4), libasound2 (>= 1.0.16), libc6 (>= 2.27), libfreetype6 (>= 2.3.5), libgcc1 (>= 1:4.0), libharfbuzz0b (>= 1.2.6), libpcsclite1 (>= 1.3.0), libstdc++6 (>= 4.1.1), zlib1g (>= 1:1.2.2)
+Suggests: libnss-mdns, fonts-dejavu-extra, fonts-ipafont-gothic, fonts-ipafont-mincho, fonts-wqy-microhei | fonts-wqy-zenhei, fonts-indic
+Breaks: clojure1.8 (<= 1.8.0-7ubuntu1~), eclipse-platform (<< 3.8.1-11), eclipse-rcp (<< 3.8.1-11), jetty9 (<< 9.4.15-1~), libequinox-osgi-java (<< 3.9.1), libreoffice-core (<< 1:6.1.5-2~), netbeans (<< 10.0-3~), visualvm (<< 1.4.2-2~)
+Conflicts: openjdk-11-jdk-headless (<< 11~18-2), oracle-java11-installer
+Conffiles:
+ /etc/java-11-openjdk/accessibility.properties cb5ef274bab0096317e5053916bd8bb8
+ /etc/java-11-openjdk/jfr/default.jfc 2730381dce23a5e42ace528334ef27d9
+ /etc/java-11-openjdk/jfr/profile.jfc fd38560d36aea6cf476234f248fce6de
+ /etc/java-11-openjdk/jvm-amd64.cfg 321e540aeca44cb27331afed9a4c0d02
+ /etc/java-11-openjdk/logging.properties 98ad75f661f25cb9ca756efb7836c4bb
+ /etc/java-11-openjdk/management/jmxremote.access 5880f5255cf159b204761cf24be76061
+ /etc/java-11-openjdk/management/management.properties a5fc398c37a16613b1e37add65987531
+ /etc/java-11-openjdk/net.properties 627de155bebf2229bc7a91cb0c6edf75
+ /etc/java-11-openjdk/psfont.properties.ja d4c735bf5756759a1c3bc8de408629fc
+ /etc/java-11-openjdk/psfontj2d.properties 17b15d370018acc01550175882c7da91
+ /etc/java-11-openjdk/security/blocked.certs 19e78890d61c0dfc65b291341c08beba
+ /etc/java-11-openjdk/security/default.policy 9879f76568aec4af3c793aacbb6b6336
+ /etc/java-11-openjdk/security/java.policy fbf2b55342947695aa2a15e3485ed29f
+ /etc/java-11-openjdk/security/java.security 42af36e9b80264a226172ddf2f1aab80
+ /etc/java-11-openjdk/security/nss.cfg ccd8ac9d15b87311cc9054767517c14d
+ /etc/java-11-openjdk/security/policy/README.txt 3d47d94bc4f19d18bcc8b23f51d013af
+ /etc/java-11-openjdk/security/policy/limited/default_US_export.policy 1a08ffdf0bc871296c8d698fb22f542a
+ /etc/java-11-openjdk/security/policy/limited/default_local.policy 6d7b4616a5dba477b6b6d3f9a12e568f
+ /etc/java-11-openjdk/security/policy/limited/exempt_local.policy 4cbb03f484c86cbea1a217baae07d3c9
+ /etc/java-11-openjdk/security/policy/unlimited/default_US_export.policy 1a08ffdf0bc871296c8d698fb22f542a
+ /etc/java-11-openjdk/security/policy/unlimited/default_local.policy 2a0f330c51aff13a96af8bd5082c84a8
+ /etc/java-11-openjdk/security/public_suffix_list.dat f33efcca09b5457612c4eb1e5211bc58
+ /etc/java-11-openjdk/sound.properties 4f95242740bfb7b133b879597947a41e
+ /etc/java-11-openjdk/swing.properties 235f7a79068085d8ef02e2b5134a294a
+Description: OpenJDK Java runtime, using Hotspot JIT (headless)
+ Minimal Java runtime - needed for executing non GUI Java programs,
+ using Hotspot JIT.
+Homepage: https://openjdk.java.net/

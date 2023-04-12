@@ -1,0 +1,16 @@
+Package: libcommons-io-java
+Status: deinstall ok half-installed
+Priority: optional
+Section: java
+Installed-Size: 248
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Architecture: all
+Source: commons-io
+Version: 2.6-2+deb10u1
+Config-Version: 2.6-2+deb10u1
+Depends: libcommons-parent-java (>= 43)
+Suggests: libcommons-io-java-doc
+Description: Common useful IO related classes
+ Commons-IO contains utility classes, stream implementations, file filters and
+ endian classes.
+Homepage: http://commons.apache.org/io/

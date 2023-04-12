@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appset>
+	<database>
+		<ip>192.168.16.250</ip>
+		<port>3306</port>
+		<username>root</username>
+		<password>mysql@2021</password>
+		<sqlitepath>/home/gdwy/sysconfigdb/SysConfig.db</sqlitepath>
+	</database>
+</appset>
