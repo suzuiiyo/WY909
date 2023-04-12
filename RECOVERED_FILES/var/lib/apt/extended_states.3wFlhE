@@ -1,6 +1,0 @@
-Package: extundelete
-Status: install reinstreq half-installed
-Priority: optional
-Section: utils
-Architecture: amd64
-Version: 0.2.4-2
